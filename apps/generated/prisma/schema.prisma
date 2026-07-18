@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  SUPER_ADMIN
+  PLATFORM_ADMIN
+  ORGANIZER
+  JUDGE
+  CONTESTANT
+  PUBLIC_VOTER
+  FINANCE_OFFICER
+  SUPPORT_STAFF
+  MODERATOR
+}
+
+enum VoteSource {
+  ONLINE
+  SMS
+  ADMIN_BONUS
+  SPONSOR_BONUS
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String?
+  role      Role     @default(CONTESTANT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  competitions Competition[]
+}
+
+model Competition {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  category    String
+  country     String
+  province    String?
+  status      String   @default("DRAFT")
+  organizerId String
+  organizer   User     @relation(fields: [organizerId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  contestants Contestant[]
+  votes       Vote[]
+}
+
+model Contestant {
+  id            String      @id @default(cuid())
+  fullName      String
+  bio           String?
+  province      String?
+  country       String?
+  competitionId String
+  competition   Competition @relation(fields: [competitionId], references: [id])
+  votes         Vote[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Vote {
+  id               String      @id @default(cuid())
+  competitionId    String
+  competition      Competition @relation(fields: [competitionId], references: [id])
+  contestantId     String
+  contestant       Contestant  @relation(fields: [contestantId], references: [id])
+  source           VoteSource
+  quantity         Int         @default(1)
+  phoneNumber      String?
+  paymentReference String?
+  gateway          String?
+  amount           Decimal?
+  ipAddress        String?
+  deviceInfo       String?
+  createdAt        DateTime    @default(now())
+}
