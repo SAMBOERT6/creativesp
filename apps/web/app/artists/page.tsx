@@ -65,6 +65,9 @@ export default function ArtistsDirectoryPage() {
                 {artist.province ? <span className="rounded-full border border-slate-700 px-3 py-1">{artist.province}</span> : null}
                 {artist.country ? <span className="rounded-full border border-slate-700 px-3 py-1">{artist.country}</span> : null}
               </div>
+              <a href={`/artists/${`${artist.fullName}-${artist.stageName ?? ''}`.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="mt-4 inline-flex rounded-full border border-cyan-500/40 px-3 py-2 text-sm font-medium text-cyan-400">
+                View full profile
+              </a>
             </div>
           ))}
         </div>
