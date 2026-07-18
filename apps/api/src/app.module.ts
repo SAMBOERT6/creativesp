@@ -21,11 +21,13 @@ import { ArtistsController } from './artists/artists.controller';
 import { ArtistsService } from './artists/artists.service';
 import { EventsController } from './events/events.controller';
 import { EventsService } from './events/events.service';
+import { OpportunitiesController } from './opportunities/opportunities.controller';
+import { OpportunitiesService } from './opportunities/opportunities.service';
 import { seedDatabase } from './seed-data';
 
 @Module({
   imports: [],
-  controllers: [AppController, AuthController, CompetitionsController, ContestantsController, VotesController, AdminController, NewsController, ArtistsController, EventsController],
+  controllers: [AppController, AuthController, CompetitionsController, ContestantsController, VotesController, AdminController, NewsController, ArtistsController, EventsController, OpportunitiesController],
   providers: [
     AppService,
     AuthService,
@@ -36,6 +38,7 @@ import { seedDatabase } from './seed-data';
     NewsService,
     ArtistsService,
     EventsService,
+    OpportunitiesService,
     PrismaService,
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     { provide: APP_GUARD, useClass: RolesGuard },
