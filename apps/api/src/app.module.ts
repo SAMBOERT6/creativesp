@@ -15,11 +15,17 @@ import { ContestantsController } from './contestants/contestants.controller';
 import { ContestantsService } from './contestants/contestants.service';
 import { AdminController } from './admin/admin.controller';
 import { AdminService } from './admin/admin.service';
+import { NewsController } from './news/news.controller';
+import { NewsService } from './news/news.service';
+import { ArtistsController } from './artists/artists.controller';
+import { ArtistsService } from './artists/artists.service';
+import { EventsController } from './events/events.controller';
+import { EventsService } from './events/events.service';
 import { seedDatabase } from './seed-data';
 
 @Module({
   imports: [],
-  controllers: [AppController, AuthController, CompetitionsController, ContestantsController, VotesController, AdminController],
+  controllers: [AppController, AuthController, CompetitionsController, ContestantsController, VotesController, AdminController, NewsController, ArtistsController, EventsController],
   providers: [
     AppService,
     AuthService,
@@ -27,6 +33,9 @@ import { seedDatabase } from './seed-data';
     ContestantsService,
     VotesService,
     AdminService,
+    NewsService,
+    ArtistsService,
+    EventsService,
     PrismaService,
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     { provide: APP_GUARD, useClass: RolesGuard },
