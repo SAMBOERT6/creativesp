@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class VotesService {
-  private votes = [
-    {
-      id: 'vote-001',
-      competitionId: 'cmp-001',
-      contestantId: 'cnt-001',
-      source: 'ONLINE',
-      quantity: 5,
-      amount: 10,
-      gateway: 'PayFast',
-    },
-  ];
+  constructor(private readonly prisma: PrismaService = new PrismaService()) {}
 
-  list() {
-    return this.votes;
+  async list() {
+    if (this.prisma.connected) {
+      return this.prisma.vote.findMany({ orderBy: { createdAt: 'desc' } });
+    }
+
+    return [];
   }
 
-  create(dto: any) {
-    const item = { id: `vote-${Date.now()}`, ...dto };
-    this.votes.push(item);
-    return item;
+  async create(dto: any) {
+    if (this.prisma.connected) {
+      return this.prisma.vote.create({
+        data: {
+          competitionId: dto.competitionId,
+          contestantId: dto.contestantId,
+          source: dto.source,
+          quantity: dto.quantity ?? 1,
+          phoneNumber: dto.phoneNumber,
+          paymentReference: dto.paymentReference,
+          gateway: dto.gateway,
+          amount: dto.amount,
+          ipAddress: dto.ipAddress,
+          deviceInfo: dto.deviceInfo,
+        },
+      });
+    }
+
+    return { id: `vote-${Date.now()}`, ...dto };
   }
 }
