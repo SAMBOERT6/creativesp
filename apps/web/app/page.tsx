@@ -26,7 +26,7 @@ export default function HomePage() {
           </p>
           <div className="flex flex-wrap gap-4">
             <a href="http://localhost:4000/docs" className="rounded-full bg-cyan-500 px-6 py-3 font-medium text-slate-950 transition hover:bg-cyan-400">Open API Docs</a>
-            <a href="/" className="rounded-full border border-slate-700 px-6 py-3 font-medium text-slate-200 transition hover:border-cyan-400">Launch Dashboard</a>
+            <a href="/login" className="rounded-full border border-slate-700 px-6 py-3 font-medium text-slate-200 transition hover:border-cyan-400">Launch Dashboard</a>
           </div>
         </div>
         <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-6">
